@@ -1,12 +1,15 @@
+import { Database } from "../database/database.js";
 import { routes } from "../routes/index.js";
 
-export function routeHandler(request, response) {
+const database = new Database()
+
+export function routeHandler(request, response, ) {
     const route = routes.find((route) => {
         return route.method === request.method && route.path === request.url
     })
 
     if (route) {
-        return route.controller({request, response})
+        return route.controller({request, response, database})
     }
 
     return response.writeHead(404).end("404: Not found in the system")
