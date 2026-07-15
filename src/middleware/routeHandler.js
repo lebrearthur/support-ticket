@@ -13,7 +13,7 @@ export function routeHandler(request, response, ) {
         const routeParams = request.url.match(route.path)
 
         const {query} = routeParams.groups
-        request.papoi = query ? extractQueryParams(query) : {}
+        request.query = query ? extractQueryParams(query) : {}
 
         return route.controller({request, response, database})
     }

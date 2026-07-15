@@ -1,4 +1,5 @@
 import fs from "node:fs/promises"
+import test from "node:test"
 
 const DATABASE_PATH = new URL("db.json", import.meta.url)
 
@@ -27,6 +28,19 @@ export class Database {
         }
 
         this.#persist()
+    }
 
+    select(table, filters){
+        let data = this.#database[table] ?? []
+
+        if (filters) {
+            data = data.filter(( row ) => {
+                return Object.entries(filters).some(([key, value]) => {
+                    return row[key].toLowerCase().includes(value.toLowerCase())
+                })
+            })
+        }
+
+        return data
     }
 }
